@@ -1,6 +1,8 @@
 package com.leshiy.java;
 
 import javax.swing.*;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 
 import java.awt.Container;
 import java.awt.Font;
@@ -58,15 +60,24 @@ public class Browser extends JFrame {
         field.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            loadData("http://" + e.getActionCommand());
+                loadData("http://" + e.getActionCommand());
+            }
+        });
+        display.addHyperlinkListener(new HyperlinkListener() {
+            @Override
+            public void hyperlinkUpdate(HyperlinkEvent e) {
+                if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+                    loadData(e.getURL().toString());
+                }
             }
         });
 
     }
-    private void loadData (String text){
+
+    private void loadData(String text) {
         try {
             display.setPage(text);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("nopenope");
         }
 
